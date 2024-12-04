@@ -28,11 +28,8 @@ laravel: `8.83.6`
 
 #### Via Git
 ```bash
-git clone https://github.com/EriSetyawan166/Web-Penjadwalan-Laravel.git
+git clone https://github.com/abdiagung077/SIPERU-PPL.git
 ```
-
-### Download ZIP
-[Link](https://github.com/EriSetyawan166/Web-Penjadwalan-Laravel/archive/refs/heads/master.zip)
 
 ### Setup Aplikasi
 Jalankan perintah 
@@ -82,11 +79,3 @@ username: admin
 <br>
 password: admin
 
-## Contributors ✨
-<table>
-  <tr>
-    <td align="center"><a href="https://github.com/EriSetyawan166"><img src="https://avatars.githubusercontent.com/u/72864742?v=4" width="100px;" alt=""/><br /><sub><b>Muhammad Eri Setyawan</b></sub></a><br/><a href="#" title="Code">💻</a> <a href="#" title="Documentation">📖</td>
-    <td align="center"><a href="https://github.com/BayuPrap"><img src="https://avatars.githubusercontent.com/u/109055176?v=4" width="100px;" alt=""/><br /><sub><b>Maulana Krisna</b></sub></a><br/><a href="#" title="Bug reports">🐛</a> <a href="#" title="erd, database">📙</a></td>
-    <td align="center"><a href="#"><img src="https://github.com/github.png" width="100px;" alt=""/><br /><sub><b>Bariq Gian Gumilang</b></sub></a><br/><a href="#" title="Bug reports">🐛</a> <a href="#" title="Ideas, Planning, & Feedback">🤔</a></td>
-  </tr>
-</table>
