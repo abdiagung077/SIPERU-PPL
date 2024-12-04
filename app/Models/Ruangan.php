@@ -9,7 +9,7 @@ class Ruangan extends Model
 {
     protected $table= "ruangan";
     protected $primarykey = "id";
-    protected $fillable = ['id', 'ruangan'];
+    protected $fillable = ['id', 'ruangan', 'letak_ruang'];
 
     public function jadwal(){
         return $this->hasMany(Jadwal::class);

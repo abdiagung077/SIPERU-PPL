@@ -28,27 +28,42 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        $dtJadwal = Jadwal::with('ruangan','matakuliah', 'dosen')->latest()->paginate(5);
-        $matkul = Jadwal::count();
-        $users = User::count();
-        $jummatkul = Matkul::count();
-        $dosen = Dosen::count();
-        $hari =     Carbon::now()->isoFormat('D MMMM Y');
-        $widget = [
-            'users' => $users,
-            'jadwal' => $dtJadwal,
-            'matkul' => $matkul,
-            'jummatkul' => $jummatkul,
-            'dosen' => $dosen,
-            'hari' => $hari
-            //...
-        ];
+  public function index()
+{
+    $dtJadwal = Jadwal::with('ruangan', 'matakuliah', 'dosen')->latest()->get();
+    $jadwalByDay = $dtJadwal->groupBy('hari'); // Mengelompokkan berdasarkan hari
 
+    // Menentukan urutan hari
+    $daysOrder = [
+        'Senin' => 1,
+        'Selasa' => 2,
+        'Rabu' => 3,
+        'Kamis' => 4,
+        'Jumat' => 5
+    ];
 
-        return view('home',$widget);
-    }
+    // Mengurutkan grup jadwal berdasarkan urutan hari
+    $jadwalByDay = $jadwalByDay->sortBy(function ($day, $key) use ($daysOrder) {
+        return $daysOrder[$key] ?? 99; // Jika hari tidak ditemukan, beri urutan paling akhir
+    });
+
+    $matkul = Jadwal::count();
+    $users = User::count();
+    $jummatkul = Matkul::count();
+    $dosen = Dosen::count();
+    $hari = Carbon::now()->isoFormat('D MMMM Y');
+
+    $widget = [
+        'users' => $users,
+        'jadwalByDay' => $jadwalByDay, // Data jadwal yang sudah dikelompokkan dan diurutkan
+        'matkul' => $matkul,
+        'jummatkul' => $jummatkul,
+        'dosen' => $dosen,
+        'hari' => $hari,
+    ];
+
+    return view('home', $widget);
+}    
 
     public function create()
     {
@@ -60,33 +75,44 @@ class HomeController extends Controller
 
     public function store(Request $request)
     {
-        $test = $request->tgl;
-        $ubah = date('D', strtotime($test));
-        $ubah = Carbon::parse($ubah)->isoFormat('dddd');
-        $mulai =$request->jam_mulai;
-        $hari = $request->tgl;
-        $selesai = $request->jam_selesai;
-        $cekJam = Jadwal::where('jam_mulai', $mulai)->first();
-        $cekHari = Jadwal::where('tgl', $hari)->first();
-        if($cekJam AND $cekHari){
-            return redirect('home')->with('warning', 'Jadwal bentrok');
+        // Validasi input
+        $validated = $request->validate([
+            'idruangan' => 'required|exists:ruangan,id',
+            'idmatkul' => 'required|exists:matkul,id',
+            'idnip' => 'required|exists:dosen,id',
+            'status' => 'required|in:tersedia,digunakan',
+            'jam_mulai' => 'required|date_format:H:i',
+            'jam_selesai' => 'required|date_format:H:i|after:jam_mulai',
+            'hari' => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat', // Validasi hari
+        ]);
+    
+        // Cek apakah jadwal bentrok
+        $existingSchedule = Jadwal::where('idruangan', $request->idruangan)
+            ->where('hari', $request->hari) // Pastikan hari juga diperiksa
+            ->where(function($query) use ($request) {
+                $query->where('jam_mulai', '<', $request->jam_selesai)
+                      ->where('jam_selesai', '>', $request->jam_mulai);
+            })
+            ->exists();
+    
+        if ($existingSchedule) {
+            return redirect()->back()->with('warning', 'Jadwal bentrok dengan jadwal yang sudah ada!');
         }
-
-
+    
+        // Simpan data jadwal baru
         Jadwal::create([
-            'idmatkul' => $request->idmatkul,
-            'kelompok' => $request->kelompok,
-            'idnpp' => $request->idnpp,
             'idruangan' => $request->idruangan,
-            'tgl' => $request->tgl,
+            'idmatkul' => $request->idmatkul,
+            'idnip' => $request->idnip,
+            'status' => $request->status,
             'jam_mulai' => $request->jam_mulai,
             'jam_selesai' => $request->jam_selesai,
-            'hari' => $ubah
+            'hari' => $request->hari // Simpan hari dari input pengguna
         ]);
-
-        return redirect('home')->with('success', 'Data Berhasil Ditambahkan!');
-
+    
+        return redirect()->route('home')->with('success', 'Data jadwal berhasil ditambahkan!');
     }
+    
 
     public function edit($id)
     {
@@ -110,7 +136,37 @@ class HomeController extends Controller
         $jdl->delete();
         return back()->with('info', 'Data Berhasil Dihapus!');
     }
+    public function indexTersedia($day = null)
+    {
+        // Ambil data jadwal dengan status 'tersedia' dan muat relasi (ruangan, matakuliah, dosen)
+        $jadwalQuery = Jadwal::with(['ruangan', 'matakuliah', 'dosen'])
+                             ->where('status', 'tersedia');
 
+        // Jika hari dipilih, filter jadwal berdasarkan hari
+        if ($day) {
+            $jadwalQuery->where('hari', ucfirst($day));  // Menyesuaikan nama hari (Senin, Selasa, dsb.)
+        }
 
+        // Ambil jadwal yang sudah difilter
+        $jadwal = $jadwalQuery->get();
+
+        // Jika hari tidak dipilih, kelompokkan jadwal berdasarkan hari
+        if (!$day) {
+            // Tentukan urutan hari
+            $orderOfDays = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
+            
+            // Urutkan jadwal berdasarkan urutan hari kerja
+            $jadwal = collect($orderOfDays)->mapWithKeys(function ($day) use ($jadwal) {
+                return [$day => $jadwal->filter(function ($schedule) use ($day) {
+                    return $schedule->hari === $day;
+                })];
+            });
+        }
+
+        // Kembalikan view dengan data jadwal dan hari yang dipilih
+        return view('indextersedia', compact('jadwal', 'day'));
+    }
+    
+    
 
 }

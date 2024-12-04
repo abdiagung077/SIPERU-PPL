@@ -28,6 +28,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/hari/{id}', 'UtamaController@hari')->name('hari');
 Route::get('/input', 'HomeController@create')->name('input-home');
 
+
 // Route::get('/welcome', 'UtamaController@index')->name('utama');
 
 
@@ -73,6 +74,9 @@ Route::get('/delete-user/{id}', 'DataUserController@destroy')->name('delete-user
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::put('/profile', 'ProfileController@update')->name('profile.update');
+
+Route::get('/ruangan-tersedia', 'RuanganTersediaController@index')->name('ruangan-tersedia-home');
+Route::get('/ruangan-tersedia-hari/{id}', 'RuanganTersediaController@hari')->name('ruangan-tersedia-hari');
 
 Route::get('/about', function () {
     return view('about');

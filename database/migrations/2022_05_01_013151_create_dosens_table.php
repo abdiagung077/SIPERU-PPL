@@ -15,7 +15,7 @@ class CreateDosensTable extends Migration
     {
         Schema::create('dosen', function (Blueprint $table) {
             $table->id();
-            $table->string('npp', 10);
+            $table->string('nip', 10);
             $table->string('nama_dosen', 50);
             $table->string('no_hp', 20);
             $table->timestamps();

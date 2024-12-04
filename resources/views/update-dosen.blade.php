@@ -31,7 +31,7 @@
                 <form action="{{ route('update-dosen', $dos->id)}}" method="POST">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <input type="text" id="npp" name="npp" placeholder="Masukkan nomor NPP" class="form-control" maxlength="10" required autocomplete="off" pattern="[0-9]{10}" value="{{ $dos->npp}}">
+                        <input type="text" id="nip" name="nip" placeholder="Masukkan nomor NIP" class="form-control" maxlength="10" required autocomplete="off" pattern="[0-9]{10}" value="{{ $dos->nip}}">
                     </div>
                     <div class="form-group">
                         <input type="text" id="nama_dosen" name="nama_dosen" placeholder="Masukkan nama dosen" class="form-control" required autocomplete="off" value="{{ $dos->nama_dosen}}">

@@ -15,7 +15,7 @@ class CreateMatkulsTable extends Migration
     {
         Schema::create('matkul', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_matkul', 5);
+            $table->string('kode_matkul', 10);
             $table->string('nama_matkul', 50);
             $table->integer('jum_sks');
             $table->string('prodi', 50);

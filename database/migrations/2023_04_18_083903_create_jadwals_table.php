@@ -18,12 +18,11 @@ class CreateJadwalsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('idmatkul');
             $table->foreign('idmatkul')->references('id')->on('matkul');
-            $table->string('kelompok', 2);
-            $table->unsignedBigInteger('idnpp');
-            $table->foreign('idnpp')->references('id')->on('dosen');
+            $table->unsignedBigInteger('idnip');
+            $table->foreign('idnip')->references('id')->on('dosen');
             $table->unsignedBigInteger('idruangan');
             $table->foreign('idruangan')->references('id')->on('ruangan');
-            $table->date('tgl');
+            $table->string('status', 10);
             $table->time('jam_mulai');
             $table->time('jam_selesai');
             $table->string('hari', 255);

@@ -40,7 +40,7 @@
                                 @if (Auth::user()->hak_akses=="Admin")
                                     <p>Administrator</p>
                                 @else
-                                    <p>Mahasiswa</p>
+                                    <p>Pengguna</p>
                                 @endif
                             </div>
                         </div>

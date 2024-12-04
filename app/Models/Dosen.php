@@ -9,7 +9,7 @@ class Dosen extends Model
 {
     protected $table= "dosen";
     protected $primarykey = "id";
-    protected $fillable = ['id', 'npp', 'nama_dosen', 'no_hp'];
+    protected $fillable = ['id', 'nip', 'nama_dosen', 'no_hp'];
 
     public function jadwal(){
         return $this->hasMany(Jadwal::class);

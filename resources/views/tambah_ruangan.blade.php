@@ -33,6 +33,9 @@
                     <div class="form-group">
                         <input type="text" id="ruangan" name="ruangan" placeholder="Masukkan nama ruangan" class="form-control" required autocomplete="off">
                     </div>
+                    <div class="form-group">
+                        <input type="text" id="letak_ruang" name="letak_ruang" placeholder="Masukkan letak ruangan" class="form-control" required autocomplete="off">
+                    </div>
                         <button type="submit" class="btn btn-success">Simpan Data</button>
                     </div>
                 </form>

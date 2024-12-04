@@ -86,7 +86,7 @@ class DataDosenController extends Controller
      */
     public function destroy($id)
     {
-        $result = Jadwal::where('idnpp', $id)->first();
+        $result = Jadwal::where('idnip', $id)->first();
         if($result){
             return back()->with('warning', 'Data Tidak Boleh Dihapus');
         }
@@ -96,7 +96,7 @@ class DataDosenController extends Controller
         return back()->with('info', 'Data Berhasil Dihapus!');
         // $ck = Matkul::findorfail($id);
 
-        // $dos = Dosen::where('id', '=', Jadwal::get('idnpp'))->first();
+        // $dos = Dosen::where('id', '=', Jadwal::get('idnip'))->first();
         // if($dos === null){
         //     $dos = Dosen::findorfail($id);
         //     // $dos->delete();

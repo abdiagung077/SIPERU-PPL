@@ -37,8 +37,8 @@
                                     </div> --}}
 
                                     <div class="form-group">
-                                        <input type="text" autocomplete="off" class="form-control form-control-user" name="username" placeholder="{{ __('Masukkan Username') }}" value="{{ old('username') }}" required pattern="[0-9]+" maxlength="10">
-                                    </div>
+                                        <input type="text" id="username" name="username" placeholder="Masukkan Username" class="form-control" required autocomplete="off" pattern="[a-zA-Z0-9]+" maxlength="10">
+                                    </div> 
 
                                     <div class="form-group">
                                         <input type="email" class="form-control form-control-user" autocomplete="off" name="email" placeholder="{{ __('Masukkan Email') }}" value="{{ old('email') }}" required >

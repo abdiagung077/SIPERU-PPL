@@ -37,7 +37,7 @@ class TambahDosenController extends Controller
     public function store(Request $request)
     {
         Dosen::create([
-            'npp' => $request->npp,
+            'nip' => $request->nip,
             'nama_dosen' => $request->nama_dosen,
             'no_hp' => $request->no_hp
         ]);

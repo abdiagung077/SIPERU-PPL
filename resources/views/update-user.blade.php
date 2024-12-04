@@ -35,8 +35,8 @@
                         <input type="text" id="name" name="name" placeholder="Masukkan Nama" class="form-control" value="{{ $du->name}}" required pattern="[a-zA-Z'-'\s]*">
                     </div>
                     <div class="form-group">
-                        <input type="text" id="username" name="username" placeholder="Username" class="form-control" value="{{ $du->username}}" required pattern="[0-9]+" maxlength="10">
-                    </div>
+                        <input type="text" id="username" name="username" placeholder="Masukkan Username" class="form-control" required autocomplete="off" pattern="[a-zA-Z0-9]+" maxlength="10">
+                    </div> 
                     <div class="form-group">
                         <input type="email" id="email" name="email" placeholder="Masukkan Email" class="form-control" value="{{ $du->email}}" required>
                     </div>

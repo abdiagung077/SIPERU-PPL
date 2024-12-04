@@ -31,7 +31,7 @@
                 <form action="{{ route('tambah-matkul')}}" method="POST">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <input type="text" id="kode_matkul" name="kode_matkul" placeholder="Masukkan kode matkul" class="form-control" maxlength="5" required autocomplete="off">
+                        <input type="text" id="kode_matkul" name="kode_matkul" placeholder="Masukkan kode matkul" class="form-control" maxlength="10" required autocomplete="off">
                     </div>
                     <div class="form-group">
                         <input type="text" id="nama_matkul" name="nama_matkul" placeholder="Masukkan nama matkul" class="form-control" required autocomplete="off">

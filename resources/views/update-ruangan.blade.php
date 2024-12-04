@@ -35,6 +35,9 @@
                         <input type="text" id="ruangan" name="ruangan" placeholder="Masukkan Ruangan" class="form-control"value="{{ $rg->ruangan}}" required>
                     </div>
                     <div class="form-group">
+                        <input type="text" id="letak_ruang" name="letak_ruang" placeholder="Masukkan Letak Ruangan" class="form-control"value="{{ $rg->letak_ruang}}" required>
+                    </div>
+                    <div class="form-group">
                         <button type="submit" class="btn btn-warning">Ubah Data</button>
                     </div>
                 </form>

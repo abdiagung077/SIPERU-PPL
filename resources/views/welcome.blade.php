@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Lab ICT</title>
+        <title>SIPERU</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Web Penjadwalan lab ICT
+                    Sistem Penjadwalan Ruangan FKIP Universitas Bengkulu
                 </div>
 
 

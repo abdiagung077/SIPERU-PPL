@@ -18,6 +18,7 @@ class TambahRuanganController extends Controller
     {
         Ruangan::create([
             'ruangan' => $request->ruangan,
+            'letak_ruang' => $request->letak_ruang,
         ]);
 
         return redirect('data-ruangan')->with('success', 'Data Berhasil Ditambahkan!');

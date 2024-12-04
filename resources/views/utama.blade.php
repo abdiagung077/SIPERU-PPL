@@ -49,7 +49,7 @@
     <div class="container d-flex align-items-center justify-content-between">
 
       <div class="logo">
-        <h1><a href="{{ route('utama')}}">Lab ICT</a></h1>
+        <h1><a href="{{ route('utama')}}">SIPERU</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
@@ -83,23 +83,8 @@
       <div class="row">
         <div class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1" data-aos="fade-up">
           <div>
-            <h1>Hai Labkomers!</h1>
-            <h2>Selamat Datang di Laboratorium ICT Universitas Budi Luhur</h2>
-            <p>Jangan Lupa Tetap Patuhi Protokol Kesehatan:</p>
-            <div class="content d-flex flex-column justify-content-center">
-                <div class="col-md-6 icon-box" data-aos="fade-up">
-                    <p><i class="fa-solid fa-mask-face"></i> Memakai Masker</p>
-                </div>
-                <div class="col-md-6 icon-box" data-aos="fade-up">
-                    <p><i class="fa-solid fa-people-group"></i> Tidak Berkerumun</p>
-                </div>
-                <div class="col-md-6 icon-box" data-aos="fade-up">
-                    <p><i class="fa-solid fa-people-arrows-left-right"></i> Menjaga Jarak</p>
-                </div>
-                <div class="col-md-6 icon-box" data-aos="fade-up">
-                    <p><i class="fa-solid fa-pump-soap"></i> Gunakan Hand Sanitizer</p>
-                </div>
-            </div>
+            <h1>Hai Users!</h1>
+            <h2>Selamat Datang di Sistem Penjadwalan Ruang Fakultas Keguruan dan Ilmu Pengetahuan Universitas Bengkulu</h2>  
 
           </div>
 
@@ -132,7 +117,6 @@
                                 <a class="dropdown-item" href="{{url('hari/Rabu')}}#jadwal">Rabu</a>
                                 <a class="dropdown-item" href="{{url('hari/Kamis')}}#jadwal">Kamis</a>
                                 <a class="dropdown-item" href="{{url('hari/Jumat')}}#jadwal">Jumat</a>
-                                <a class="dropdown-item" href="{{url('hari/Sabtu')}}#jadwal">Sabtu</a>
                             </div>
 
                         </div>
@@ -162,75 +146,72 @@
                                 @endif
                             </ol>
                             <div class="carousel-inner">
-
                                 <div class="carousel-item active">
-                                    <div data-aos="fade-up" class="table-responsive mt-2 ">
-                                        @if ($i==0)
-                                            <img src="{{asset('img/nodata.png')}}" alt="">
+                                    <div data-aos="fade-up" class="table-responsive mt-2">
+                                        @if ($jadwal->isEmpty())
+                                            <img src="{{ asset('img/nodata.png') }}" alt="No Data">
                                         @else
-                                        <table id="datatablesSimple" class="table table-striped table-hover ">
-                                            <thead>
-                                                <tr>
-                                                    <th style="background-color: #143454; color: white">Matkul</th>
-                                                    <th>Jam</th>
-                                                    <th>Kelompok</th>
-                                                    <th>Ruang</th>
-                                                    <th>Nama Dosen</th>
-                                                </tr>
-                                            </thead>
-                                        <tbody>
-                                        @foreach ($jadwal->slice(0,5) as  $jw)
-                                            <tr>
-                                                <td>{{$jw->matakuliah->nama_matkul}}</td>
-                                                <td>{{ date('H:i', strtotime($jw->jam_mulai)) }} - {{ date('H:i', strtotime($jw->jam_selesai)) }}</td>
-                                                <td>{{ $jw->kelompok}}</td>
-                                                <td>{{ $jw->ruangan->ruangan}}</td>
-                                                <td>{{ $jw->dosen->nama_dosen}}</td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                    @endif
+                                            <table id="datatablesSimple" class="table table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="background-color: #143454; color: white">Ruang</th>
+                                                        <th>Jam</th>
+                                                        <th>status</th>
+                                                        <th>Matakuliah</th>
+                                                        <th>Nama Dosen</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($jadwal->slice(0, 5) as $jw)
+                                                        <tr>
+                                                            <td>{{ $jw->ruangan->ruangan }}</td>
+                                                            <td>{{ date('H:i', strtotime($jw->jam_mulai)) }} - {{ date('H:i', strtotime($jw->jam_selesai)) }}</td>
+                                                            <td>{{ $jw->status }}</td>
+                                                            <td>{{ $jw->matakuliah->nama_matkul }}</td>
+                                                            <td>{{ $jw->dosen->nama_dosen }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                            <?php $j = 0;?>
-                            @php
-                                $x=5;
-                            @endphp
-                            @while ($j<$a-1)
-
-                            <div class="carousel-item">
-                                <div data-aos="fade-up" class="table-responsive mt-2 ">
-                                    <table id="datatablesSimple" class="table table-striped ">
-                                        <thead>
-                                            <tr>
-                                                <th style="background-color: #143454; color: white">Matkul</th>
-                                                <th>Jam</th>
-                                                <th>Kelompok</th>
-                                                <th>Ruang</th>
-                                                <th>Nama Dosen</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($jadwal->slice($x,5) as  $jw)
-                                            <tr>
-                                                <td>{{$jw->matakuliah->nama_matkul}}</td>
-                                                <td>{{ date('H:i', strtotime($jw->jam_mulai)) }} - {{ date('H:i', strtotime($jw->jam_selesai)) }}</td>
-                                                <td>{{ $jw->kelompok}}</td>
-                                                <td>{{ $jw->ruangan->ruangan}}</td>
-                                                <td>{{ $jw->dosen->nama_dosen}}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            @php
-                                $j++;
-                                $x = $x + 5;
-                            @endphp
-
-                            @endwhile
+                                <?php $j = 0; ?>
+                                @php $x = 5; @endphp
+                                @while ($j < ceil($jadwal->count() / 5) - 1)
+                                    <div class="carousel-item">
+                                        <div data-aos="fade-up" class="table-responsive mt-2">
+                                            <table id="datatablesSimple" class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="background-color: #143454; color: white">Ruang</th>
+                                                        <th>Jam</th>
+                                                        <th>status</th>
+                                                        <th>Matakuliah</th>
+                                                        <th>Nama Dosen</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($jadwal->slice($x, 5) as $jw)
+                                                        <tr>
+                                                            <td>{{ $jw->ruangan->ruangan }}</td>
+                                                            <td>{{ date('H:i', strtotime($jw->jam_mulai)) }} - {{ date('H:i', strtotime($jw->jam_selesai)) }}</td>
+                                                            <td>{{ $jw->status }}</td>
+                                                            <td>{{ $jw->matakuliah->nama_matkul }}</td>
+                                                            <td>{{ $jw->dosen->nama_dosen }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    @php
+                                        $j++;
+                                        $x += 5;
+                                    @endphp
+                                @endwhile
+                            </div>                            
+                       
 
 
                             {{-- @if ($i>5)
@@ -279,14 +260,9 @@
 
     <div class="container py-4">
       <div class="copyright">
-        &copy; Copyright <strong><span>LAB ICT</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>SIPERU FKIP</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/free-bootstrap-app-landing-page-template/ -->
-        Designed by CALAS 2022
       </div>
     </div>
   </footer><!-- End Footer -->

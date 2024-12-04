@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Lab ICT</title>
+    <title>SIPERU</title>
 
     <!-- Fonts -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
@@ -34,9 +34,9 @@
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home">
             <div class="sidebar-brand-icon rotate-n-15">
-                <img style="width: 40px" src="{{ asset('img/LogoLab-Circle.png') }}" alt="">
+                <img style="width: 50px" src="{{ asset('img/LogoLab-Circle.png') }}" alt="">
             </div>
-            <div class="sidebar-brand-text mx-3">Jadwal ICT</div>
+            <div class="sidebar-brand-text mx-3">SIPERU</div>
         </a>
 
         <!-- Divider -->

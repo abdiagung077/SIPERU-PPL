@@ -5,7 +5,7 @@
 
 @section('main-content')
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">{{ __('Jadwal Lab ICT') }}</h1>
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Sistem Penjadwalan Ruangan Fakultas Keguruan dan Ilmu Pengetahuan Universitas Bengkulu') }}</h1>
 
     @if (session('success'))
     <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -144,90 +144,64 @@
     </div>
     @endif
 
-    <div class="row">
+     <!-- Tombol Tambah Data -->
+     <div class="mb-4">
+        <a href="{{ route('input-home') }}" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i> Tambah Data
+        </a>
+        <a href="{{ route('ruangan-tersedia-home') }}" class="btn btn-primary">
+            <i class="fa-solid fa-eye"></i> Lihat Ruangan Tersedia
+        </a>        
+    </div>
 
-        <!-- Content Column -->
-        <div class="col-lg-12 mb-4">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-table me-1"></i>
-                    Informasi Jadwal {{$hari}}
-                </div>
-                <div class="card-body">
-                    @if (Auth::user()->hak_akses=="Admin")
-                    <a href="{{ route('input-home')}}" class="btn btn-primary mb-3"><i class="fa-solid fa-plus"></i> Tambah Data</a>
+    @foreach ($jadwalByDay as $day => $jadwal)
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>{{ ucfirst($day) }}</h5> <!-- Nama Hari -->
+            </div>
+            <div class="card-body">
+                @if ($jadwal->isEmpty())
+                    <p>Tidak ada jadwal untuk hari ini.</p>
+                @else
                     <div class="table-responsive">
-                    {{-- @dd($hari) --}}
-                    {{-- @dd(Carbon::now()->isoFormat('D MMMM Y')) --}}
-                    {{-- @dd(date("d F Y")) --}}
-                    {{-- @dd(translatedFormat('l jS F Y')) --}}
-                        <table id="datatablesSimple" class="table table-bordered ">
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Mata Kuliah</th>
-                                    <th>Kelompok</th>
-                                    <th>Dosen</th>
                                     <th>Ruangan</th>
-                                    <th>Tanggal</th>
+                                    <th>Mata Kuliah</th>
+                                    <th>Dosen</th>
+                                    <th>Status</th>
                                     <th>Jam Mulai</th>
                                     <th>Jam Selesai</th>
-                                    <th>Aksi</th>
+                                        <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($jadwal as  $jw)
-                                <tr>
-                                    <td>{{($jadwal->currentPage() - 1) * $jadwal->perPage() + $loop->iteration}}</td>
-                                    <td>{{$jw->matakuliah->nama_matkul}}</td>
-                                    {{-- @dd( $jw->matakuliah) --}}
-                                    {{-- @dd($jw->matakuliah) --}}
-                                    <td>{{ $jw->kelompok }}</td>
-                                    <td>{{ $jw->dosen->nama_dosen}}</td>
-                                    <td>{{ $jw->ruangan->ruangan}}</td>
-                                    {{-- @dd($jw->ruangan) --}}
-                                    <td>{{ date('d-m-Y', strtotime($jw->tgl)) }}</td>
-                                    <td>{{ date('H:i', strtotime($jw->jam_mulai)) }}</td>
-                                    <td>{{ date('H:i', strtotime($jw->jam_selesai)) }}</td>
-                                    <td class="d-flex justify-content-center"><a href="{{ url('update', $jw->id)}}" class="btn btn-warning mr-1"><i class="fa-solid fa-pen-to-square"></i> </a><a href="{{ url('delete', $jw->id)}}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a></td>
-                                </tr>
+                                @foreach ($jadwal as $jw)
+                                    <tr>
+                                        <td>{{ $jw->ruangan->ruangan }}</td>
+                                        <td>{{ $jw->matakuliah->nama_matkul }}</td>
+                                        <td>{{ $jw->dosen->nama_dosen }}</td>
+                                        <td>{{ $jw->status }}</td>
+                                        <td>{{ date('H:i', strtotime($jw->jam_mulai)) }}</td>
+                                        <td>{{ date('H:i', strtotime($jw->jam_selesai)) }}</td>
+                                        <td class="d-flex justify-content-center">
+                                            <a href="{{ url('update', $jw->id) }}" class="btn btn-warning mr-1">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                            <a href="{{ url('delete', $jw->id) }}" class="btn btn-danger">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-                    @else
-                    <div class="table-responsive">
-                        <table id="datatablesSimple" class="table table-bordered ">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Mata Kuliah</th>
-                                    <th>Jam</th>
-                                    <th>Kelompok</th>
-                                    <th>Ruang</th>
-                                    <th>Nama Dosen</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($jadwal as  $jw)
-                                <tr>
-                                    <td>{{($jadwal->currentPage() - 1) * $jadwal->perPage() + $loop->iteration}}</td>
-                                    <td>{{ $jw->matakuliah->nama_matkul }}</td>
-                                    <td>{{ date('H:i', strtotime($jw->jam_mulai))}} - {{ date('H:i', strtotime($jw->jam_selesai))}}</td>
-                                    <td>{{ $jw->kelompok}}</td>
-                                    <td>{{$jw->ruangan->ruangan}}</td>
-                                    <td>{{ $jw->dosen->nama_dosen}}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    @endif
-                    <div class="card-footer">
-                        {{$jadwal->links()}}
-                    </div>
-                </div>
+                @endif
             </div>
+        </div>
+    @endforeach
 
             <!-- Project Card Example -->
 

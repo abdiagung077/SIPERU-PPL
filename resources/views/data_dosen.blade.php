@@ -36,7 +36,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>NPP</th>
+                                    <th>NIP</th>
                                     <th>Nama Dosen</th>
                                     <th>Nomor Hp</th>
                                     <th>Aksi</th>
@@ -46,7 +46,7 @@
                                 @foreach ($dtdosen as $ds)
                                 <tr>
                                     <td>{{($dtdosen->currentPage() - 1) * $dtdosen->perPage() + $loop->iteration}}</td>
-                                    <td>{{ $ds->npp}}</td>
+                                    <td>{{ $ds->nip}}</td>
                                     <td>{{ $ds->nama_dosen}}</td>
                                     <td>{{ $ds->no_hp}}</td>
                                     <td class="d-flex justify-content-center"><a href="{{ url('update-dosen',$ds->id)}}" class="btn btn-warning mr-1"><i class="fa-solid fa-pen-to-square"></i> </a><a href="{{ url('delete-dosen', $ds->id)}}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a></td>

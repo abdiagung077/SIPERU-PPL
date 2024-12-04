@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\App;
 class Jadwal extends Model
 {
     protected $table = "jadwal";
-    protected $primarykey = "id";
+    protected $primaryKey = "id";
     protected $fillable = [
-        'id','matkul','idmatkul', 'kelompok', 'idnpp', 'no_lab','idruangan', 'tgl', 'hari','jam_mulai','jam_selesai'];
+        'id','idmatkul', 'idnip','idruangan', 'status', 'hari','jam_mulai','jam_selesai'];
 
     public function ruangan(){
         return $this->belongsTo(Ruangan::class, 'idruangan');
@@ -23,7 +23,7 @@ class Jadwal extends Model
     }
 
     public function dosen(){
-        return $this->belongsTo(Dosen::class, 'idnpp');
+        return $this->belongsTo(Dosen::class, 'idnip');
     }
 
 
@@ -31,4 +31,6 @@ class Jadwal extends Model
         return Carbon::parse(date('d F Y'))
             ->translatedFormat('l, d F Y');
     }
+
+    
 }
